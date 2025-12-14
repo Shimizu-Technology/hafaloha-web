@@ -8,7 +8,7 @@ import type { ShippingAddress, ShippingMethod, AppConfig } from '../types/order'
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const { getToken, isSignedIn, isLoaded: authLoaded } = useAuth();
-  const { cart, subtotal, clearCart, sessionId, fetchCart, isLoading: cartLoading } = useCartStore();
+  const { cart, clearCart, sessionId, fetchCart, isLoading: cartLoading } = useCartStore();
   
   // Get items from cart (with fallback to empty array)
   const items = cart?.items || [];
@@ -90,7 +90,12 @@ export default function CheckoutPage() {
       const response = await shippingApi.calculateRates(
         {
           name: name,
-          ...shippingAddress,
+          street1: shippingAddress.street1,
+          street2: shippingAddress.street2,
+          city: shippingAddress.city,
+          state: shippingAddress.state,
+          zip: shippingAddress.zip,
+          country: shippingAddress.country || 'US',
         },
         sessionId,
         token
@@ -158,7 +163,7 @@ export default function CheckoutPage() {
         
         orderData.shipping_address = {
           ...shippingAddress,
-          name: name,
+          name: name, // Override with contact name
         };
         orderData.shipping_method = shippingMethod;
       } else {
@@ -183,7 +188,7 @@ export default function CheckoutPage() {
       
       if (response.success) {
         // Clear cart
-        await clearCart(token);
+        await clearCart();
         
         // Navigate to order confirmation page
         navigate(`/orders/${response.order.id}`);

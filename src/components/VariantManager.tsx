@@ -27,7 +27,7 @@ interface VariantManagerProps {
   inventoryLevel: 'none' | 'product' | 'variant';
 }
 
-export default function VariantManager({ productId, basePriceCents, inventoryLevel }: VariantManagerProps) {
+export default function VariantManager({ productId, inventoryLevel }: Omit<VariantManagerProps, 'basePriceCents'>) {
   const { getToken } = useAuth();
   
   // Options state
@@ -42,7 +42,6 @@ export default function VariantManager({ productId, basePriceCents, inventoryLev
   const [generating, setGenerating] = useState(false);
   
   // Edit state
-  const [editingId, setEditingId] = useState<number | null>(null);
   const [editPrice, setEditPrice] = useState('');
   const [editStock, setEditStock] = useState('');
   const [editLowStockThreshold, setEditLowStockThreshold] = useState('');

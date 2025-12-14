@@ -21,6 +21,7 @@ interface Collection {
   id: number;
   name: string;
   slug: string;
+  published: boolean;
   product_count?: number;
 }
 
@@ -165,11 +166,29 @@ export default function ProductFormPage() {
   };
 
   const handleCollectionToggle = (collectionId: number) => {
+    const collection = allCollections.find(c => c.id === collectionId);
+    
     setFormData(prev => {
       const currentIds = prev.collection_ids || [];
-      const newIds = currentIds.includes(collectionId)
-        ? currentIds.filter(id => id !== collectionId)
-        : [...currentIds, collectionId];
+      const isAdding = !currentIds.includes(collectionId);
+      const newIds = isAdding
+        ? [...currentIds, collectionId]
+        : currentIds.filter(id => id !== collectionId);
+      
+      // Show warning if adding an unpublished collection
+      if (isAdding && collection && !collection.published) {
+        toast(`⚠️ "${collection.name}" is unpublished. Customers won't see this collection on your store.`,
+          {
+            duration: 5000,
+            position: 'top-right',
+            style: {
+              background: '#FEF3C7',
+              color: '#92400E',
+            },
+          }
+        );
+      }
+      
       return { ...prev, collection_ids: newIds };
     });
   };
@@ -663,8 +682,18 @@ export default function ProductFormPage() {
                       onChange={() => handleCollectionToggle(collection.id)}
                       className="w-4 h-4 text-hafalohaRed border-gray-300 rounded focus:ring-hafalohaRed"
                     />
-                    <label htmlFor={`collection_${collection.id}`} className="ml-2 text-sm text-gray-700 cursor-pointer select-none">
+                    <label 
+                      htmlFor={`collection_${collection.id}`} 
+                      className={`ml-2 text-sm cursor-pointer select-none ${
+                        collection.published ? 'text-gray-700' : 'text-gray-400 italic'
+                      }`}
+                    >
                       {collection.name}
+                      {!collection.published && (
+                        <span className="ml-2 text-xs bg-gray-200 text-gray-600 px-1.5 py-0.5 rounded">
+                          Draft
+                        </span>
+                      )}
                       {collection.product_count !== undefined && (
                         <span className="text-xs text-gray-500 ml-1">({collection.product_count})</span>
                       )}
@@ -710,7 +739,6 @@ export default function ProductFormPage() {
         {isEditMode && id && (
           <VariantManager
             productId={parseInt(id)}
-            basePriceCents={formData.base_price_cents}
             inventoryLevel={formData.inventory_level}
           />
         )}

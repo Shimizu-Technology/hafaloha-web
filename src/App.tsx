@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser, useAuth } from '@clerk/clerk-react';
 import ProductsPage from './pages/ProductsPage';
 import ProductDetailPage from './pages/ProductDetailPage';
@@ -55,10 +55,31 @@ function AppContent() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const location = useLocation(); // Get current location
   const { user, isLoaded } = useUser();
   const { getToken } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
   const { closeCart } = useCartStore(); // Get closeCart function
+
+  // Helper to check if a path is active
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
+  };
+
+  // Helper to get nav link classes
+  const getNavLinkClass = (path: string) => {
+    const baseClass = "font-medium transition relative";
+    const activeClass = "text-hafalohaRed";
+    const inactiveClass = "text-gray-700 hover:text-hafalohaRed";
+    const underlineClass = "after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-hafalohaRed";
+    
+    return isActive(path) 
+      ? `${baseClass} ${activeClass} ${underlineClass}`
+      : `${baseClass} ${inactiveClass}`;
+  };
 
   // Helper to close both mobile menu and cart
   const handleNavClick = () => {
@@ -167,21 +188,21 @@ function AppContent() {
               <div className="hidden md:flex items-center space-x-8">
                 <Link
                   to="/products"
-                  className="text-gray-700 hover:text-hafalohaRed font-medium transition"
+                  className={getNavLinkClass('/products')}
                   onClick={handleNavClick}
                 >
                   Shop
                 </Link>
                 <Link
                   to="/collections"
-                  className="text-gray-700 hover:text-hafalohaRed font-medium transition"
+                  className={getNavLinkClass('/collections')}
                   onClick={handleNavClick}
                 >
                   Collections
                 </Link>
                 <Link
                   to="/about"
-                  className="text-gray-700 hover:text-hafalohaRed font-medium transition"
+                  className={getNavLinkClass('/about')}
                   onClick={handleNavClick}
                 >
                   Our Story
@@ -286,21 +307,21 @@ function AppContent() {
 
                 <Link
                   to="/products"
-                  className="block text-gray-700 hover:text-hafalohaRed font-medium py-2"
+                  className={`block py-2 ${isActive('/products') ? 'text-hafalohaRed font-semibold' : 'text-gray-700 hover:text-hafalohaRed font-medium'}`}
                   onClick={handleNavClick}
                 >
                   Shop
                 </Link>
                 <Link
                   to="/collections"
-                  className="block text-gray-700 hover:text-hafalohaRed font-medium py-2"
+                  className={`block py-2 ${isActive('/collections') ? 'text-hafalohaRed font-semibold' : 'text-gray-700 hover:text-hafalohaRed font-medium'}`}
                   onClick={handleNavClick}
                 >
                   Collections
                 </Link>
                 <Link
                   to="/about"
-                  className="block text-gray-700 hover:text-hafalohaRed font-medium py-2"
+                  className={`block py-2 ${isActive('/about') ? 'text-hafalohaRed font-semibold' : 'text-gray-700 hover:text-hafalohaRed font-medium'}`}
                   onClick={handleNavClick}
                 >
                   Our Story

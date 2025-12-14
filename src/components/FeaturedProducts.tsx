@@ -115,8 +115,7 @@ export default function FeaturedProducts() {
                 <div className="absolute top-2 left-2 flex flex-col gap-2">
                   {!product.actually_available && <ProductBadge type="sold-out" />}
                   {product.new_product && <ProductBadge type="new" />}
-                  {isOnSale && <ProductBadge type="sale" value={`SAVE $${saveAmount}`} />}
-                  {product.featured && <ProductBadge type="featured" />}
+                  {isOnSale && <ProductBadge type="sale" saveAmount={saveAmount} />}
                 </div>
               </div>
 
