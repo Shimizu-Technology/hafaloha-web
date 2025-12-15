@@ -60,6 +60,10 @@ VITE_API_BASE_URL=http://localhost:3000
 
 # Clerk (Authentication)
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
+
+# PostHog Analytics (optional for local dev)
+VITE_PUBLIC_POSTHOG_KEY=phc_...
+VITE_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 ```
 
 **🔒 Keep the `.env` file private!** Never commit it to git.
