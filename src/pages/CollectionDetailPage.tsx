@@ -3,6 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import { collectionsApi } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import type { Product } from '../services/api';
+import { ProductGridSkeleton, PageHeaderSkeleton } from '../components/Skeleton';
+import FadeIn from '../components/animations/FadeIn';
+import { StaggerContainer, StaggerItem } from '../components/animations/StaggerContainer';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 interface Collection {
   id: number;
@@ -106,17 +110,11 @@ export default function CollectionDetailPage() {
       {/* Breadcrumbs */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <nav className="flex text-sm text-gray-500">
-            <Link to="/" className="hover:text-hafalohaRed transition">
-              Home
-            </Link>
-            <span className="mx-2">/</span>
-            <Link to="/collections" className="hover:text-hafalohaRed transition">
-              Collections
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-gray-900 font-medium">{collection.name}</span>
-          </nav>
+          <Breadcrumbs items={[
+            { label: 'Home', path: '/' },
+            { label: 'Collections', path: '/collections' },
+            { label: collection.name }
+          ]} />
         </div>
       </div>
 
