@@ -78,10 +78,14 @@ export default function CollectionDetailPage() {
 
   if (loading && !collection) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-hafalohaRed mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading collection...</p>
+      <div className="min-h-screen bg-warm-50">
+        <div className="bg-white border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <PageHeaderSkeleton />
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <ProductGridSkeleton count={8} />
         </div>
       </div>
     );
@@ -89,7 +93,7 @@ export default function CollectionDetailPage() {
 
   if (error || !collection) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-warm-50 flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-600 mb-4">{error || 'Collection not found'}</p>
           <Link
@@ -106,7 +110,7 @@ export default function CollectionDetailPage() {
   const totalPages = meta ? Math.ceil(meta.total / meta.per_page) : 1;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-warm-50">
       {/* Breadcrumbs */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -121,13 +125,15 @@ export default function CollectionDetailPage() {
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{collection.name}</h1>
-          {collection.description && (
-            <p className="text-lg text-gray-600 mb-4">{collection.description}</p>
-          )}
-          <p className="text-sm text-gray-500">
-            {meta?.total || 0} {meta?.total === 1 ? 'product' : 'products'}
-          </p>
+          <FadeIn>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">{collection.name}</h1>
+            {collection.description && (
+              <p className="text-lg text-warm-500 mb-4">{collection.description}</p>
+            )}
+            <p className="text-sm text-warm-500">
+              {meta?.total || 0} {meta?.total === 1 ? 'product' : 'products'}
+            </p>
+          </FadeIn>
         </div>
       </div>
 
@@ -178,8 +184,8 @@ export default function CollectionDetailPage() {
       {/* Products Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {loading ? (
-          <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-hafalohaRed"></div>
+          <div className="py-6">
+            <ProductGridSkeleton count={8} />
           </div>
         ) : products.length === 0 ? (
           <div className="text-center py-12">
@@ -194,11 +200,13 @@ export default function CollectionDetailPage() {
         ) : (
           <>
             {/* Product Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8" staggerDelay={0.05}>
               {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <StaggerItem key={product.id}>
+                  <ProductCard product={product} />
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
 
             {/* Pagination */}
             {totalPages > 1 && (

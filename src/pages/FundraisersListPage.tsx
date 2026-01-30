@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Calendar, ArrowRight } from 'lucide-react';
 import api from '../services/api';
+import FadeIn from '../components/animations/FadeIn';
+import { StaggerContainer, StaggerItem } from '../components/animations/StaggerContainer';
 
 interface Fundraiser {
   id: number;
@@ -93,18 +95,20 @@ export default function FundraisersListPage() {
       {/* Hero Section */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-hafalohaRed/10 mb-6">
-              <Heart className="w-8 h-8 text-hafalohaRed" />
+          <FadeIn>
+            <div className="text-center max-w-3xl mx-auto">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-hafalohaRed/10 mb-6">
+                <Heart className="w-8 h-8 text-hafalohaRed" />
+              </div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                Support Our Fundraisers
+              </h1>
+              <p className="text-lg text-gray-600">
+                Help support local teams, schools, and organizations by purchasing 
+                Hafaloha merchandise. A portion of every sale goes directly to the cause.
+              </p>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Support Our Fundraisers
-            </h1>
-            <p className="text-lg text-gray-600">
-              Help support local teams, schools, and organizations by purchasing 
-              Hafaloha merchandise. A portion of every sale goes directly to the cause.
-            </p>
-          </div>
+          </FadeIn>
         </div>
       </div>
 
@@ -116,12 +120,12 @@ export default function FundraisersListPage() {
               <span className="w-2 h-2 bg-green-500 rounded-full mr-3 animate-pulse"></span>
               Active Fundraisers
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {activeFundraisers.map((fundraiser) => (
+                <StaggerItem key={fundraiser.id}>
                 <Link
-                  key={fundraiser.id}
                   to={`/fundraisers/${fundraiser.slug}`}
-                  className="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:border-hafalohaRed/30 transition-all duration-300"
+                  className="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:border-hafalohaRed/30 transition-all duration-300 block"
                 >
                   {/* Image or Placeholder */}
                   <div className="aspect-video bg-linear-to-br from-hafalohaRed/10 to-hafalohaRed/5 relative overflow-hidden">
@@ -189,8 +193,9 @@ export default function FundraisersListPage() {
                     </div>
                   </div>
                 </Link>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </section>
         ) : (
           <section className="mb-16">
