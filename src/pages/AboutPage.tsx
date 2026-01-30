@@ -5,10 +5,10 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section - Clean and minimal */}
-      <div style={{ backgroundColor: '#FDFBF7' }}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <div className="bg-warm">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
           <FadeIn direction="none">
-            <h1 className="text-4xl sm:text-5xl font-bold text-center mb-6 text-gray-900">
+            <h1 className="text-4xl sm:text-5xl font-bold text-center mb-6 text-gray-900 tracking-tight">
               Our Story
             </h1>
           </FadeIn>
@@ -21,12 +21,12 @@ export default function AboutPage() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
         
         {/* About Hafaloha Section */}
         <FadeIn>
           <div className="mb-12">
-            <h2 className="text-3xl font-bold mb-6 text-gray-900">About Hafaloha</h2>
+            <h2 className="text-3xl font-bold mb-6 text-gray-900 tracking-tight">About Hafaloha</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                 The name “Hafaloha” represents the Chamorro and Hawaiian cultures which are intertwined 
@@ -46,7 +46,7 @@ export default function AboutPage() {
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {/* Håfa Adai */}
           <StaggerItem>
-            <div className="rounded-lg p-8" style={{ backgroundColor: '#FDFBF7' }}>
+            <div className="rounded-lg p-8 bg-warm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Håfa Adai!</h3>
               <p className="text-gray-600 leading-relaxed mb-4">
                 “Håfa Adai” is a greeting used by the Chamorro people of the Mariana Islands 
@@ -61,7 +61,7 @@ export default function AboutPage() {
 
           {/* Aloha */}
           <StaggerItem>
-            <div className="rounded-lg p-8" style={{ backgroundColor: '#FDFBF7' }}>
+            <div className="rounded-lg p-8 bg-warm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Aloha!</h3>
               <p className="text-gray-600 leading-relaxed mb-4">
                 “Aloha” is a salutation used by the natives of the Hawaiian Islands. It is often 
@@ -79,7 +79,7 @@ export default function AboutPage() {
         {/* Our Hope Philosophy */}
         <FadeIn>
           <div className="mb-16">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-900">Our Hope</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-gray-900 tracking-tight">Our Hope</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                 Our desire is that the “Håfa Adai” mindset and “Aloha” spirit (as described above) would 
@@ -103,7 +103,7 @@ export default function AboutPage() {
         {/* Founder Story */}
         <FadeIn>
           <div className="mb-16">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-900">Meet the Founders</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-gray-900 tracking-tight">Meet the Founders</h2>
             <div className="max-w-3xl mx-auto">
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                 Håfa Adai! We’re Leonard Kaae Jr. and Tara Kaae, the founders of Hafaloha. What started as 
@@ -134,7 +134,7 @@ export default function AboutPage() {
         {/* Founder Photo & Team Info Section */}
         <div className="mb-16">
           <FadeIn>
-            <h2 className="text-2xl font-semibold mb-8 text-gray-900">Meet the Team</h2>
+            <h2 className="text-2xl font-semibold mb-8 text-gray-900 tracking-tight">Meet the Team</h2>
           </FadeIn>
           
           {/* Founders Photo */}
@@ -180,8 +180,8 @@ export default function AboutPage() {
 
         {/* Instagram Feed Placeholder */}
         <FadeIn>
-          <div className="rounded-lg p-8 mb-16" style={{ backgroundColor: '#FDFBF7' }}>
-            <h2 className="text-2xl font-semibold mb-4 text-center text-gray-900">Follow Our Journey</h2>
+          <div className="rounded-lg p-8 mb-16 bg-warm">
+            <h2 className="text-2xl font-semibold mb-4 text-center text-gray-900 tracking-tight">Follow Our Journey</h2>
             <p className="text-center text-gray-600 mb-8">
               Stay connected with us on Instagram for behind-the-scenes content and new releases.
             </p>
@@ -220,11 +220,11 @@ export default function AboutPage() {
         {/* Values Section */}
         <div className="mb-16">
           <FadeIn>
-            <h2 className="text-2xl font-semibold mb-8 text-gray-900">Our Values</h2>
+            <h2 className="text-2xl font-semibold mb-8 text-gray-900 tracking-tight">Our Values</h2>
           </FadeIn>
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <StaggerItem>
-              <div className="text-center p-6 rounded-lg" style={{ backgroundColor: '#FDFBF7' }}>
+              <div className="text-center p-6 rounded-lg bg-warm">
                 <h3 className="text-lg font-medium mb-2 text-gray-900">Island Pride</h3>
                 <p className="text-gray-600 text-sm">
                   Celebrating Chamorro and Hawaiian heritage through every product we create
@@ -232,7 +232,7 @@ export default function AboutPage() {
               </div>
             </StaggerItem>
             <StaggerItem>
-              <div className="text-center p-6 rounded-lg" style={{ backgroundColor: '#FDFBF7' }}>
+              <div className="text-center p-6 rounded-lg bg-warm">
                 <h3 className="text-lg font-medium mb-2 text-gray-900">Premium Quality</h3>
                 <p className="text-gray-600 text-sm">
                   Using only the finest materials and designs that stand the test of time
@@ -240,7 +240,7 @@ export default function AboutPage() {
               </div>
             </StaggerItem>
             <StaggerItem>
-              <div className="text-center p-6 rounded-lg" style={{ backgroundColor: '#FDFBF7' }}>
+              <div className="text-center p-6 rounded-lg bg-warm">
                 <h3 className="text-lg font-medium mb-2 text-gray-900">Community First</h3>
                 <p className="text-gray-600 text-sm">
                   Building connections and supporting our island family, near and far
@@ -253,7 +253,7 @@ export default function AboutPage() {
         {/* Call to Action */}
         <FadeIn>
           <div className="text-center py-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-900">Ready to Experience Hafaloha?</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-gray-900 tracking-tight">Ready to Experience Hafaloha?</h2>
             <p className="mb-6 max-w-xl mx-auto text-gray-600">
               Explore our collection of authentic Chamorro pride merchandise and bring the island spirit to your life.
             </p>
