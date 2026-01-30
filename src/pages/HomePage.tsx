@@ -39,7 +39,7 @@ const defaultCategoryCards: Array<{
   }
 ];
 
-const heroEase = [0.22, 1, 0.36, 1];
+const heroEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function HomePage() {
   const [hero, setHero] = useState<HomepageSection | null>(null);
@@ -90,7 +90,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1, ease: heroEase }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-900 leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-900 leading-tight tracking-tight"
             >
               {heroContent.title || defaultHero.title}
             </motion.h1>
@@ -137,11 +137,11 @@ export default function HomePage() {
 
       {/* Shop by Category - Dynamic Cards */}
       {!loading && cardsContent.length > 0 && (
-        <div className="py-16 sm:py-20" style={{ backgroundColor: '#FDFBF7' }}>
+        <div className="py-20 sm:py-24 bg-warm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeIn>
               <div className="text-center mb-10 sm:mb-14">
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                   Shop by Category
                 </h2>
               </div>
@@ -173,7 +173,7 @@ export default function HomePage() {
       )}
 
       {/* Founder Teaser Section */}
-      <div className="bg-white py-16 sm:py-20">
+      <div className="bg-white py-20 sm:py-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
             {/* Image */}
@@ -190,7 +190,7 @@ export default function HomePage() {
             {/* Content */}
             <FadeIn direction="right" delay={0.1}>
               <div>
-                <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-gray-900">
+                <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-gray-900 tracking-tight">
                   The Hafaloha Story
                 </h2>
                 <p className="text-gray-600 mb-4 leading-relaxed">
@@ -217,7 +217,7 @@ export default function HomePage() {
 
       {/* Newsletter / Call to Action */}
       <FadeIn>
-        <div className="py-16 sm:py-20" style={{ backgroundColor: '#FDFBF7' }}>
+        <div className="py-20 sm:py-24 bg-warm">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl font-semibold mb-4 text-gray-900">
               Stay Connected
