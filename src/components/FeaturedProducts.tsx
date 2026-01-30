@@ -53,8 +53,8 @@ export default function FeaturedProducts() {
 
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <h2 className="text-3xl font-bold text-center mb-8 sm:mb-12 text-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+        <h2 className="text-3xl font-bold text-center mb-8 sm:mb-12 text-gray-900 tracking-tight">
           Featured Products
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -71,10 +71,10 @@ export default function FeaturedProducts() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
       <FadeIn>
         <div className="text-center mb-10 sm:mb-14">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 tracking-tight">
             Featured Products
           </h2>
           <p className="text-base text-gray-500 max-w-2xl mx-auto">
