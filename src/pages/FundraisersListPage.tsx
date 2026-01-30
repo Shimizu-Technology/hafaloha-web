@@ -134,6 +134,7 @@ export default function FundraisersListPage() {
                         src={fundraiser.image_url}
                         alt={fundraiser.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center">

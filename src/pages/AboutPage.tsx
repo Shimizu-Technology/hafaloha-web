@@ -144,6 +144,7 @@ export default function AboutPage() {
                 src="/images/len_and_tara_hafaloha.webp" 
                 alt="Leonard and Tara Kaae - Hafaloha Founders" 
                 className="w-full h-auto object-cover rounded-lg"
+                loading="lazy"
               />
             </div>
           </FadeIn>
