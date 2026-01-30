@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Calendar, ArrowRight } from 'lucide-react';
 import api from '../services/api';
+import { FundraiserCardSkeleton } from '../components/Skeleton';
 import FadeIn from '../components/animations/FadeIn';
 import { StaggerContainer, StaggerItem } from '../components/animations/StaggerContainer';
 
@@ -62,10 +63,22 @@ export default function FundraisersListPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-hafalohaRed mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading fundraisers...</p>
+      <div className="min-h-screen bg-warm-50">
+        <div className="bg-white border-b border-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+            <div className="text-center">
+              <div className="animate-pulse bg-warm-200 rounded-full w-16 h-16 mx-auto mb-6" />
+              <div className="animate-pulse bg-warm-200 h-10 w-72 mx-auto mb-4 rounded-lg" />
+              <div className="animate-pulse bg-warm-200 h-5 w-96 mx-auto rounded-lg" />
+            </div>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <FundraiserCardSkeleton key={i} />
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -73,7 +86,7 @@ export default function FundraisersListPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-warm-50 flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-600 mb-4">{error}</p>
           <button
@@ -103,7 +116,7 @@ export default function FundraisersListPage() {
               <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
                 Support Our Fundraisers
               </h1>
-              <p className="text-lg text-gray-600">
+              <p className="text-lg text-warm-500">
                 Help support local teams, schools, and organizations by purchasing 
                 Hafaloha merchandise. A portion of every sale goes directly to the cause.
               </p>

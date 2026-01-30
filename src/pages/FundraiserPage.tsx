@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Users, Package, Calendar, MapPin, Phone, Mail, ShoppingCart, Plus, Minus, Trash2 } from 'lucide-react';
 import api from '../services/api';
 import toast from 'react-hot-toast';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 interface Fundraiser {
   id: number;
