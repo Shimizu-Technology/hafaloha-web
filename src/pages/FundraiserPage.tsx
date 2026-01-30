@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Users, Package, Calendar, MapPin, Phone, Mail, ShoppingCart, Plus, Minus, Trash2 } from 'lucide-react';
 import api from '../services/api';
 import toast from 'react-hot-toast';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 interface Fundraiser {
   id: number;
@@ -198,6 +199,13 @@ export default function FundraiserPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Breadcrumbs */}
+        <Breadcrumbs items={[
+          { label: 'Home', path: '/' },
+          { label: 'Fundraisers', path: '/fundraisers' },
+          { label: fundraiser.name }
+        ]} />
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
@@ -390,6 +398,7 @@ function ProductCard({
               src={product.image_url}
               alt={product.name}
               className="w-full h-full object-contain"
+              loading="lazy"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-400">

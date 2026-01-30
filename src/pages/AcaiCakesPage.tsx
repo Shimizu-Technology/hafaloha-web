@@ -483,6 +483,7 @@ export default function AcaiCakesPage() {
                   src={config.settings.image_url}
                   alt={config.settings.name}
                   className="w-full max-w-sm mx-auto rounded-2xl shadow-xl"
+                  loading="lazy"
                 />
               </div>
               <div className="order-2 text-center md:text-left">

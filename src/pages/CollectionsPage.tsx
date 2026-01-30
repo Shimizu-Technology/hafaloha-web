@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { collectionsApi } from '../services/api';
+import { CollectionCardSkeleton, PageHeaderSkeleton } from '../components/Skeleton';
+import FadeIn from '../components/animations/FadeIn';
+import { StaggerContainer, StaggerItem } from '../components/animations/StaggerContainer';
 
 interface Collection {
   id: number;
@@ -69,10 +72,18 @@ export default function CollectionsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-hafalohaRed mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading collections...</p>
+      <div className="min-h-screen bg-warm-50">
+        <div className="bg-white border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <PageHeaderSkeleton />
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <CollectionCardSkeleton key={i} />
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -123,14 +134,16 @@ export default function CollectionsPage() {
   const totalPages = meta ? Math.ceil(meta.total / meta.per_page) : 1;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-warm-50">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Collections</h1>
-          <p className="text-lg text-gray-600">
-            Shop our curated collections of Chamorro pride apparel and merchandise
-          </p>
+          <FadeIn>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Collections</h1>
+            <p className="text-lg text-warm-500">
+              Shop our curated collections of Chamorro pride apparel and merchandise
+            </p>
+          </FadeIn>
         </div>
       </div>
 
@@ -181,8 +194,10 @@ export default function CollectionsPage() {
       {/* Collections Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {loading ? (
-          <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-hafalohaRed"></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <CollectionCardSkeleton key={i} />
+            ))}
           </div>
         ) : collections.length === 0 ? (
           <div className="text-center py-12">
@@ -200,10 +215,10 @@ export default function CollectionsPage() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8" staggerDelay={0.08}>
               {collections.map((collection) => (
+                <StaggerItem key={collection.id}>
                 <Link
-                  key={collection.id}
                   to={`/collections/${collection.slug}`}
                   className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
                 >
@@ -215,6 +230,7 @@ export default function CollectionsPage() {
                         alt={collection.name}
                         className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                         style={{ objectFit: 'contain' }}
+                        loading="lazy"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gray-200">
@@ -255,8 +271,9 @@ export default function CollectionsPage() {
                     </p>
                   </div>
                 </Link>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
 
             {/* Pagination */}
             {totalPages > 1 && (

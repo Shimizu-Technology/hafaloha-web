@@ -427,7 +427,7 @@ function AppContent() {
 
         {/* Footer - Hidden when printing and on admin pages */}
         {!isAdminPage && (
-        <footer className="bg-gray-50 border-t border-gray-100 print:hidden">
+        <footer className="bg-warm-50 border-t border-warm-100 print:hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
               {/* Brand */}
@@ -437,7 +437,7 @@ function AppContent() {
                   alt="Hafaloha" 
                   className="h-8 w-auto"
                 />
-                <p className="text-gray-500 text-sm mt-4 leading-relaxed">
+                <p className="text-warm-500 text-sm mt-4 leading-relaxed">
                   Island Living Apparel for All<br />
                   Celebrating Chamorro and Hawaiian heritage
                 </p>
@@ -534,7 +534,7 @@ function AppContent() {
               </div>
             </div>
 
-            <div className="border-t border-gray-200 mt-12 pt-8">
+            <div className="border-t border-warm-200 mt-12 pt-8">
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                 <p className="text-gray-400 text-sm text-center sm:text-left">
                   &copy; 2026 Hafaloha. All rights reserved.
