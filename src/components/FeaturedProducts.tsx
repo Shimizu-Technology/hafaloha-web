@@ -16,7 +16,6 @@ export default function FeaturedProducts() {
     const fetchFeaturedProducts = async () => {
       try {
         setIsLoading(true);
-        // Fetch featured products, limit to 8 for homepage
         const response = await productsApi.getProducts({ 
           featured: true, 
           per_page: 8 
@@ -24,14 +23,12 @@ export default function FeaturedProducts() {
         
         let featuredProducts = response.products;
         
-        // If we have fewer than 6 featured products, fetch newest to fill the gap
         if (featuredProducts.length < 6) {
           const newestResponse = await productsApi.getProducts({ 
             per_page: 8 - featuredProducts.length,
             sort: 'newest'
           });
           
-          // Combine featured + newest, remove duplicates
           const allProducts = [...featuredProducts, ...newestResponse.products];
           const uniqueProducts = allProducts.filter((product, index, self) => 
             index === self.findIndex((p) => p.id === product.id)
@@ -64,12 +61,12 @@ export default function FeaturedProducts() {
   }
 
   if (error || products.length === 0) {
-    return null; // Don't show section if no products
+    return null;
   }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
-      <FadeIn>
+      <FadeIn immediate>
         <div className="text-center mb-10 sm:mb-14">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 tracking-tight">
             Featured Products
@@ -81,6 +78,7 @@ export default function FeaturedProducts() {
       </FadeIn>
 
       <StaggerContainer
+        immediate
         className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-12"
         staggerDelay={0.06}
       >
@@ -114,7 +112,7 @@ export default function FeaturedProducts() {
                     </div>
                   )}
 
-                  {/* Badges - Only essential ones */}
+                  {/* Badges */}
                   <div className="absolute top-3 left-3 flex flex-col gap-2">
                     {!product.actually_available && <ProductBadge type="sold-out" />}
                     {isOnSale && <ProductBadge type="sale" />}
@@ -123,12 +121,10 @@ export default function FeaturedProducts() {
 
                 {/* Content */}
                 <div className="pt-4 flex flex-col grow">
-                  {/* Product Name */}
                   <h3 className="font-medium text-sm sm:text-base text-gray-900 mb-2 line-clamp-2 group-hover:text-hafalohaRed transition">
                     {product.name}
                   </h3>
 
-                  {/* Price */}
                   <div className="mt-auto">
                     {isOnSale ? (
                       <div className="flex items-center gap-2">
@@ -152,12 +148,12 @@ export default function FeaturedProducts() {
         })}
       </StaggerContainer>
 
-      {/* View All Button */}
-      <FadeIn>
+      {/* View All Button — hafalohaRed bg */}
+      <FadeIn immediate>
         <div className="text-center">
           <Link
             to="/products"
-            className="group inline-flex items-center gap-2 text-base px-8 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition font-medium"
+            className="group inline-flex items-center gap-2 text-base px-8 py-3 bg-hafalohaRed text-white rounded-lg hover:bg-[var(--color-hafaloha-red-dark)] transition font-medium"
           >
             View All Products
             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

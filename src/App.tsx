@@ -88,6 +88,16 @@ function AppContent() {
   const { getToken } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
   const { closeCart } = useCartStore(); // Get closeCart function
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Nav scroll behavior — backdrop blur + border when scrolled
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close cart and mobile menu on route change (handles back/forward, programmatic navigation, etc.)
   useEffect(() => {
@@ -190,7 +200,7 @@ function AppContent() {
 
         {/* Navigation - Hidden when printing and on admin pages */}
         {!isAdminPage && (
-        <nav className="bg-white border-b border-gray-100 sticky top-0 z-40 print:hidden">
+        <nav className={`sticky top-0 z-40 print:hidden transition-all duration-300 ${isScrolled ? "bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-sm" : "bg-white border-b border-transparent"}`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-18 py-3">
               {/* Logo */}
@@ -435,26 +445,30 @@ function AppContent() {
 
         {/* Footer - Hidden when printing and on admin pages */}
         {!isAdminPage && (
-        <footer className="bg-warm-50 border-t border-warm-100 print:hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
+        <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white print:hidden">
+          {/* Red accent line at top */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--color-hafaloha-red)] to-transparent" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-18">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 sm:gap-12">
               {/* Brand */}
               <div className="sm:col-span-2 md:col-span-1">
                 <img 
                   src="/images/hafaloha-red-logo.webp" 
                   alt="Hafaloha" 
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
-                <p className="text-gray-500 text-sm mt-4 leading-relaxed">
-                  Island Living Apparel for All<br />
+                <p className="text-gray-400 text-sm mt-3 leading-relaxed">
+                  Island Living Apparel for All
+                </p>
+                <p className="text-gray-500 text-xs mt-1 leading-relaxed">
                   Celebrating Chamorro and Hawaiian heritage
                 </p>
-                <div className="flex space-x-4 mt-4">
+                <div className="flex space-x-4 mt-5">
                   <a 
                     href="https://www.facebook.com/hafaloha" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-gray-600 transition"
+                    className="text-gray-400 hover:text-hafalohaRed transition-colors duration-200"
                     aria-label="Facebook"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -465,7 +479,7 @@ function AppContent() {
                     href="https://www.instagram.com/hafaloha" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-gray-600 transition"
+                    className="text-gray-400 hover:text-hafalohaRed transition-colors duration-200"
                     aria-label="Instagram"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -477,25 +491,25 @@ function AppContent() {
 
               {/* Footer Navigation */}
               <div>
-                <h4 className="font-medium text-gray-900 mb-4">Shop</h4>
-                <ul className="space-y-2">
+                <h4 className="font-medium text-white mb-4">Shop</h4>
+                <ul className="space-y-3">
                   <li>
-                    <Link to="/products" className="text-gray-500 hover:text-gray-900 transition text-sm">
+                    <Link to="/products" className="text-gray-400 hover:text-white transition text-sm">
                       All Products
                     </Link>
                   </li>
                   <li>
-                    <Link to="/products?category=mens" className="text-gray-500 hover:text-gray-900 transition text-sm">
+                    <Link to="/products?category=mens" className="text-gray-400 hover:text-white transition text-sm">
                       Mens
                     </Link>
                   </li>
                   <li>
-                    <Link to="/products?category=womens" className="text-gray-500 hover:text-gray-900 transition text-sm">
+                    <Link to="/products?category=womens" className="text-gray-400 hover:text-white transition text-sm">
                       Womens
                     </Link>
                   </li>
                   <li>
-                    <Link to="/collections" className="text-gray-500 hover:text-gray-900 transition text-sm">
+                    <Link to="/collections" className="text-gray-400 hover:text-white transition text-sm">
                       Collections
                     </Link>
                   </li>
@@ -503,25 +517,25 @@ function AppContent() {
               </div>
 
               <div>
-                <h4 className="font-medium text-gray-900 mb-4">Info</h4>
-                <ul className="space-y-2">
+                <h4 className="font-medium text-white mb-4">Info</h4>
+                <ul className="space-y-3">
                   <li>
-                    <Link to="/about" className="text-gray-500 hover:text-gray-900 transition text-sm">
+                    <Link to="/about" className="text-gray-400 hover:text-white transition text-sm">
                       Our Story
                     </Link>
                   </li>
                   <li>
-                    <Link to="/contact" className="text-gray-500 hover:text-gray-900 transition text-sm">
+                    <Link to="/contact" className="text-gray-400 hover:text-white transition text-sm">
                       Contact
                     </Link>
                   </li>
                   <li>
-                    <Link to="/shipping" className="text-gray-500 hover:text-gray-900 transition text-sm">
+                    <Link to="/shipping" className="text-gray-400 hover:text-white transition text-sm">
                       Shipping Info
                     </Link>
                   </li>
                   <li>
-                    <Link to="/returns" className="text-gray-500 hover:text-gray-900 transition text-sm">
+                    <Link to="/returns" className="text-gray-400 hover:text-white transition text-sm">
                       Returns
                     </Link>
                   </li>
@@ -529,29 +543,29 @@ function AppContent() {
               </div>
 
               <div>
-                <h4 className="font-medium text-gray-900 mb-4">Location</h4>
-                <address className="text-gray-500 text-sm not-italic">
+                <h4 className="font-medium text-white mb-4">Location</h4>
+                <address className="text-gray-400 text-sm not-italic leading-relaxed">
                   121 E. Marine Corps Dr<br />
                   Suite 1-103 & Suite 1-104<br />
                   Hagåtña, Guam 96910<br />
                   <br />
-                  <a href="tel:+16714727733" className="hover:text-gray-900 transition">
+                  <a href="tel:+16714727733" className="hover:text-white transition">
                     +1 (671) 472-7733
                   </a>
                 </address>
               </div>
             </div>
 
-            <div className="border-t border-gray-200 mt-12 pt-8">
+            <div className="border-t border-white/10 mt-12 pt-8">
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                <p className="text-gray-400 text-sm text-center sm:text-left">
+                <p className="text-gray-500 text-sm text-center sm:text-left">
                   &copy; 2026 Hafaloha. All rights reserved.
                 </p>
                 <div className="flex gap-6 text-sm">
-                  <Link to="/privacy" className="text-gray-400 hover:text-gray-600 transition">
+                  <Link to="/privacy" className="text-gray-500 hover:text-gray-300 transition">
                     Privacy Policy
                   </Link>
-                  <Link to="/terms" className="text-gray-400 hover:text-gray-600 transition">
+                  <Link to="/terms" className="text-gray-500 hover:text-gray-300 transition">
                     Terms of Service
                   </Link>
                 </div>

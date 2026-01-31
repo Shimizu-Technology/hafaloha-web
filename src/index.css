@@ -45,14 +45,18 @@ h1, h2, h3, h4, h5, h6 {
   color: #111827; /* gray-900 */
 }
 
-h1 { font-size: 2.25rem; } /* 36px */
-h2 { font-size: 1.5rem; }  /* 24px */
-h3 { font-size: 1.25rem; } /* 20px */
+h1 { font-size: 2.5rem; } /* 40px */
+h2 { font-size: 1.875rem; } /* 30px */
+h3 { font-size: 1.5rem; } /* 24px */
 h4 { font-size: 1.125rem; } /* 18px */
 
 @media (min-width: 640px) {
-  h1 { font-size: 2.5rem; } /* 40px */
-  h2 { font-size: 1.75rem; } /* 28px */
+  h1 { font-size: 3rem; } /* 48px */
+  h2 { font-size: 2.25rem; } /* 36px */
+}
+
+@media (min-width: 1024px) {
+  h1 { font-size: 3.75rem; } /* 60px */
 }
 
 /* Paragraph text */

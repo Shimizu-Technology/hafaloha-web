@@ -12,7 +12,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       to={`/products/${product.slug}`}
-      className="group bg-white overflow-hidden flex flex-col h-full"
+      className="group bg-white overflow-hidden flex flex-col h-full rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300"
     >
       <motion.div
         className="flex flex-col h-full"
@@ -20,7 +20,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         transition={{ duration: 0.2 }}
       >
         {/* Image */}
-        <div className="relative bg-gray-50 overflow-hidden rounded-lg" style={{ aspectRatio: '1/1' }}>
+        <div className="relative bg-gray-50 overflow-hidden rounded-t-xl" style={{ aspectRatio: '1/1' }}>
           {product.primary_image_url ? (
             <img
               src={product.primary_image_url}
@@ -44,14 +44,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
           
-          {/* Badges - Only essential ones */}
+          {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {/* Sold Out Badge (highest priority) */}
             {!product.actually_available && (
               <ProductBadge type="sold-out" />
             )}
             
-            {/* Sale Badge */}
             {product.sale_price_cents && product.sale_price_cents < product.base_price_cents && (
               <ProductBadge 
                 type="sale" 
@@ -61,14 +59,12 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
 
-        {/* Content - minimal and clean */}
-        <div className="pt-4 flex flex-col grow">
-          {/* Product Name */}
+        {/* Content */}
+        <div className="p-4 flex flex-col grow">
           <h3 className="font-medium text-base text-gray-900 group-hover:text-hafalohaRed transition-colors line-clamp-2 mb-2">
             {product.name}
           </h3>
 
-          {/* Price */}
           <div className="mt-auto">
             {product.sale_price_cents && product.sale_price_cents < product.base_price_cents ? (
               <div className="flex items-center gap-2">

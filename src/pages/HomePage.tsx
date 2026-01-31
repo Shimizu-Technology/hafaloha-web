@@ -51,12 +51,10 @@ export default function HomePage() {
       try {
         const data = await homepageApi.getSections();
         
-        // Get hero section
         if (data.grouped.hero && data.grouped.hero.length > 0) {
           setHero(data.grouped.hero[0]);
         }
         
-        // Get category cards
         if (data.grouped.category_card && data.grouped.category_card.length > 0) {
           setCategoryCards(data.grouped.category_card);
         }
@@ -70,15 +68,13 @@ export default function HomePage() {
     fetchSections();
   }, []);
 
-  // Use dynamic or fallback content
   const heroContent = hero || defaultHero;
   const cardsContent = categoryCards.length > 0 ? categoryCards : defaultCategoryCards;
-  const hasHeroImage = !!heroContent.background_image_url;
 
   return (
     <div className="min-h-screen">
       {/* ============================================================ */}
-      {/* HERO SECTION — gradient orb background, optional white card  */}
+      {/* HERO SECTION — always dark gradient, optional image overlay  */}
       {/* ============================================================ */}
       <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-[70vh] flex items-center overflow-hidden">
         {/* Gradient orbs */}
@@ -88,105 +84,71 @@ export default function HomePage() {
           <div className="absolute -bottom-1/4 left-1/3 w-80 h-80 bg-red-400/10 rounded-full blur-3xl" />
         </div>
 
-        {/* Optional background image overlay (if API provides one) */}
-        {hasHeroImage && (
+        {/* Background image overlay (subtle, if API provides one) */}
+        {heroContent.background_image_url && (
           <div
-            className="absolute inset-0 bg-cover bg-center opacity-30"
+            className="absolute inset-0 bg-cover bg-center opacity-25"
             style={{ backgroundImage: `url('${heroContent.background_image_url}')` }}
           />
         )}
 
-        {/* Content */}
+        {/* Content — always text on dark gradient */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 w-full text-center">
-          {hasHeroImage ? (
-            /* With API image → white frosted card on top of image+gradient */
-            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-8 sm:p-12 lg:p-16 inline-block max-w-3xl shadow-xl">
-              <motion.h1
+          <div className="max-w-3xl mx-auto">
+            {/* Animated gradient badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: heroEase }}
+              className="mb-6 inline-flex"
+            >
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium bg-gradient-to-r from-red-500/20 to-amber-500/20 border border-white/10 backdrop-blur-sm text-white/90">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                Island Living Apparel
+              </span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: heroEase }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight"
+            >
+              {heroContent.title || defaultHero.title}
+            </motion.h1>
+            {heroContent.subtitle && (
+              <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1, ease: heroEase }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-900 leading-tight tracking-tight"
+                transition={{ duration: 0.8, delay: 0.2, ease: heroEase }}
+                className="text-lg sm:text-xl mb-10 text-gray-300 max-w-xl mx-auto leading-relaxed"
               >
-                {heroContent.title || defaultHero.title}
-              </motion.h1>
-              {heroContent.subtitle && (
-                <motion.p
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: heroEase }}
-                  className="text-base sm:text-lg mb-8 text-gray-600 max-w-xl mx-auto leading-relaxed"
-                >
-                  {heroContent.subtitle}
-                </motion.p>
-              )}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: heroEase }}
-                className="flex flex-col sm:flex-row gap-4 justify-center"
+                {heroContent.subtitle}
+              </motion.p>
+            )}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: heroEase }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              <Link
+                to={heroContent.button_link || "/products"}
+                className="group btn-primary text-lg px-10 py-4 inline-flex items-center justify-center gap-2"
               >
-                <Link
-                  to={heroContent.button_link || "/products"}
-                  className="group btn-primary text-lg px-10 py-4 inline-flex items-center justify-center gap-2"
-                >
-                  {heroContent.button_text || "Shop Now"}
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-                <Link
-                  to="/collections"
-                  className="btn-secondary text-lg px-8 py-4 inline-flex items-center justify-center"
-                >
-                  Browse Collections
-                </Link>
-              </motion.div>
-            </div>
-          ) : (
-            /* No API image → text directly on dark gradient bg */
-            <div className="max-w-3xl mx-auto">
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1, ease: heroEase }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight"
+                {heroContent.button_text || "Shop Now"}
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+              <Link
+                to="/collections"
+                className="border-2 border-white/30 text-white hover:bg-white/10 rounded-lg text-lg px-8 py-4 inline-flex items-center justify-center transition-colors"
               >
-                {heroContent.title || defaultHero.title}
-              </motion.h1>
-              {heroContent.subtitle && (
-                <motion.p
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: heroEase }}
-                  className="text-lg sm:text-xl mb-10 text-gray-300 max-w-xl mx-auto leading-relaxed"
-                >
-                  {heroContent.subtitle}
-                </motion.p>
-              )}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: heroEase }}
-                className="flex flex-col sm:flex-row gap-4 justify-center"
-              >
-                <Link
-                  to={heroContent.button_link || "/products"}
-                  className="group btn-primary text-lg px-10 py-4 inline-flex items-center justify-center gap-2"
-                >
-                  {heroContent.button_text || "Shop Now"}
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-                <Link
-                  to="/collections"
-                  className="border-2 border-white/30 text-white hover:bg-white/10 rounded-lg text-lg px-8 py-4 inline-flex items-center justify-center transition-colors"
-                >
-                  Browse Collections
-                </Link>
-              </motion.div>
-            </div>
-          )}
+                Browse Collections
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -198,28 +160,28 @@ export default function HomePage() {
       </div>
 
       {/* ============================================================ */}
-      {/* WHY HAFALOHA — brand values strip                            */}
+      {/* WHY HAFALOHA — brand values strip (immediate, no scroll)     */}
       {/* ============================================================ */}
-      <div className="border-y border-gray-100 py-12 sm:py-16">
+      <div className="border-y border-warm-200 py-12 sm:py-16 bg-warm-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <StaggerContainer immediate className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <StaggerItem>
-              <div className="text-2xl mb-2">🌺</div>
+              <div className="text-3xl mb-2">🌺</div>
               <h3 className="font-semibold text-gray-900 mb-1">Island Pride</h3>
               <p className="text-sm text-gray-500">Chamorro &amp; Hawaiian heritage</p>
             </StaggerItem>
             <StaggerItem>
-              <div className="text-2xl mb-2">✨</div>
+              <div className="text-3xl mb-2">✨</div>
               <h3 className="font-semibold text-gray-900 mb-1">Premium Quality</h3>
               <p className="text-sm text-gray-500">Built to last</p>
             </StaggerItem>
             <StaggerItem>
-              <div className="text-2xl mb-2">🤙</div>
+              <div className="text-3xl mb-2">🤙</div>
               <h3 className="font-semibold text-gray-900 mb-1">Community First</h3>
               <p className="text-sm text-gray-500">Supporting our island family</p>
             </StaggerItem>
             <StaggerItem>
-              <div className="text-2xl mb-2">📦</div>
+              <div className="text-3xl mb-2">📦</div>
               <h3 className="font-semibold text-gray-900 mb-1">Ships Worldwide</h3>
               <p className="text-sm text-gray-500">From Guam to your door</p>
             </StaggerItem>
@@ -241,7 +203,6 @@ export default function HomePage() {
               </div>
             </FadeIn>
 
-            {/* Bento grid — layout adapts to number of cards */}
             {cardsContent.length === 1 && (
               <FadeIn>
                 <CategoryCard card={cardsContent[0]} className="aspect-[16/9] md:aspect-[21/9]" />
@@ -270,7 +231,6 @@ export default function HomePage() {
                 <StaggerItem className="md:col-span-5">
                   <CategoryCard card={cardsContent[2]} className="aspect-[4/3]" />
                 </StaggerItem>
-                {/* Additional cards below in a standard grid */}
                 {cardsContent.slice(3).map((card, i) => (
                   <StaggerItem key={card.id || i + 3} className="md:col-span-4">
                     <CategoryCard card={card} className="aspect-[4/3]" />
@@ -283,12 +243,11 @@ export default function HomePage() {
       )}
 
       {/* ============================================================ */}
-      {/* FOUNDER / STORY SECTION — asymmetric editorial split         */}
+      {/* FOUNDER / STORY SECTION — scroll-triggered (further down)    */}
       {/* ============================================================ */}
       <div className="bg-white py-20 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
-            {/* Image — 7 columns */}
             <FadeIn direction="left" className="md:col-span-7">
               <div className="relative">
                 <img 
@@ -297,12 +256,10 @@ export default function HomePage() {
                   className="w-full rounded-2xl relative z-10"
                   loading="lazy"
                 />
-                {/* Decorative offset rectangle */}
                 <div className="absolute -z-0 -bottom-4 -right-4 w-full h-full bg-warm rounded-2xl" />
               </div>
             </FadeIn>
             
-            {/* Text — 5 columns */}
             <FadeIn direction="right" delay={0.1} className="md:col-span-5">
               <div>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 text-gray-900 tracking-tight">
@@ -333,13 +290,11 @@ export default function HomePage() {
       </div>
 
       {/* ============================================================ */}
-      {/* NEWSLETTER / SOCIAL — gradient bg + social proof             */}
+      {/* NEWSLETTER / SOCIAL — scroll-triggered (bottom of page)      */}
       {/* ============================================================ */}
       <FadeIn>
         <div className="relative py-20 sm:py-24 overflow-hidden">
-          {/* Gradient background */}
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" />
-          {/* Subtle orbs */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-1/2 -left-1/4 w-80 h-80 bg-red-500/10 rounded-full blur-3xl" />
             <div className="absolute -top-1/4 right-1/4 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl" />
@@ -413,8 +368,9 @@ function CategoryCard({ card, className = '' }: CategoryCardProps) {
         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         loading="lazy"
       />
-      {/* Dark overlay — deepens on hover */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-all duration-500" />
+      {/* Dark overlay with subtle red accent at bottom */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/80 transition-all duration-500" />
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--color-hafaloha-red)]/40 to-transparent" />
       {/* Text overlay */}
       <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
         <h3 className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg mb-1">
