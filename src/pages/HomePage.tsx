@@ -87,7 +87,7 @@ export default function HomePage() {
         {/* Background image overlay (subtle, if API provides one) */}
         {heroContent.background_image_url && (
           <div
-            className="absolute inset-0 bg-cover bg-center opacity-25"
+            className="absolute inset-0 bg-cover bg-center opacity-15"
             style={{ backgroundImage: `url('${heroContent.background_image_url}')` }}
           />
         )}
@@ -195,7 +195,7 @@ export default function HomePage() {
       {!loading && cardsContent.length > 0 && (
         <div className="py-20 sm:py-24 bg-warm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FadeIn>
+            <FadeIn immediate>
               <div className="text-center mb-10 sm:mb-14">
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                   Shop by Category
@@ -204,13 +204,13 @@ export default function HomePage() {
             </FadeIn>
 
             {cardsContent.length === 1 && (
-              <FadeIn>
+              <FadeIn immediate>
                 <CategoryCard card={cardsContent[0]} className="aspect-[16/9] md:aspect-[21/9]" />
               </FadeIn>
             )}
 
             {cardsContent.length === 2 && (
-              <StaggerContainer className="grid grid-cols-1 md:grid-cols-12 gap-6">
+              <StaggerContainer immediate className="grid grid-cols-1 md:grid-cols-12 gap-6">
                 <StaggerItem className="md:col-span-7">
                   <CategoryCard card={cardsContent[0]} className="aspect-[4/3] md:aspect-auto md:h-full min-h-[280px]" />
                 </StaggerItem>
@@ -221,7 +221,7 @@ export default function HomePage() {
             )}
 
             {cardsContent.length >= 3 && (
-              <StaggerContainer className="grid grid-cols-1 md:grid-cols-12 gap-6">
+              <StaggerContainer immediate className="grid grid-cols-1 md:grid-cols-12 gap-6">
                 <StaggerItem className="md:col-span-7 md:row-span-2">
                   <CategoryCard card={cardsContent[0]} className="aspect-[4/3] md:aspect-auto md:h-full min-h-[280px]" />
                 </StaggerItem>
@@ -248,7 +248,7 @@ export default function HomePage() {
       <div className="bg-white py-20 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
-            <FadeIn direction="left" className="md:col-span-7">
+            <FadeIn direction="left" immediate className="md:col-span-7">
               <div className="relative">
                 <img 
                   src="/images/len_and_tara_hafaloha.webp" 
@@ -260,7 +260,7 @@ export default function HomePage() {
               </div>
             </FadeIn>
             
-            <FadeIn direction="right" delay={0.1} className="md:col-span-5">
+            <FadeIn direction="right" delay={0.1} immediate className="md:col-span-5">
               <div>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 text-gray-900 tracking-tight">
                   The Hafaloha Story
