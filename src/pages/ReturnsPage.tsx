@@ -32,7 +32,7 @@ export default function ReturnsPage() {
       {/* Main Content */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
         {/* Return Window */}
-        <FadeIn>
+        <FadeIn immediate>
           <div className="mb-16">
             <div className="rounded-lg p-8 bg-warm">
               <div className="flex items-center gap-4 mb-4">
@@ -57,10 +57,10 @@ export default function ReturnsPage() {
 
         {/* Conditions */}
         <div className="mb-16">
-          <FadeIn>
+          <FadeIn immediate>
             <h2 className="text-3xl font-bold mb-8 text-gray-900 tracking-tight">Return Conditions</h2>
           </FadeIn>
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <StaggerContainer immediate className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Eligible */}
             <StaggerItem>
               <div className="rounded-lg p-8 border border-gray-200 h-full">
@@ -140,7 +140,7 @@ export default function ReturnsPage() {
         </div>
 
         {/* How to Return */}
-        <FadeIn>
+        <FadeIn immediate>
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-8 text-gray-900 tracking-tight">How to Initiate a Return</h2>
             <div className="space-y-6">
@@ -181,7 +181,7 @@ export default function ReturnsPage() {
         </FadeIn>
 
         {/* Refund Timeline */}
-        <FadeIn>
+        <FadeIn immediate>
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-6 text-gray-900 tracking-tight">Refund Processing</h2>
             <div className="rounded-lg p-8 bg-warm">
@@ -198,7 +198,7 @@ export default function ReturnsPage() {
         </FadeIn>
 
         {/* Exchanges */}
-        <FadeIn>
+        <FadeIn immediate>
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-6 text-gray-900 tracking-tight">Exchanges</h2>
             <div className="prose prose-lg max-w-none">
@@ -217,7 +217,7 @@ export default function ReturnsPage() {
         </FadeIn>
 
         {/* CTA */}
-        <FadeIn>
+        <FadeIn immediate>
           <div className="text-center py-8">
             <h2 className="text-2xl font-semibold mb-4 text-gray-900 tracking-tight">Need Help?</h2>
             <p className="mb-6 max-w-xl mx-auto text-gray-600">

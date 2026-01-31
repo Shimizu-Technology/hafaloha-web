@@ -30,14 +30,14 @@ export default function PrivacyPolicyPage() {
 
       {/* Main Content */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
-        <FadeIn>
+        <FadeIn immediate>
           <p className="text-sm text-gray-500 mb-12">
             Last updated: January 1, 2025
           </p>
         </FadeIn>
 
         {/* Introduction */}
-        <FadeIn>
+        <FadeIn immediate>
           <section className="mb-12">
             <p className="text-lg text-gray-700 leading-relaxed">
               Hafaloha ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy
@@ -48,7 +48,7 @@ export default function PrivacyPolicyPage() {
         </FadeIn>
 
         {/* Information We Collect */}
-        <FadeIn>
+        <FadeIn immediate>
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Information We Collect</h2>
             
@@ -87,7 +87,7 @@ export default function PrivacyPolicyPage() {
         </FadeIn>
 
         {/* How We Use Your Information */}
-        <FadeIn>
+        <FadeIn immediate>
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6 text-gray-900 tracking-tight">How We Use Your Information</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
@@ -115,7 +115,7 @@ export default function PrivacyPolicyPage() {
         </FadeIn>
 
         {/* Third Parties */}
-        <FadeIn>
+        <FadeIn immediate>
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Third-Party Services</h2>
             <p className="text-gray-700 leading-relaxed mb-6">
@@ -151,7 +151,7 @@ export default function PrivacyPolicyPage() {
         </FadeIn>
 
         {/* Data Security */}
-        <FadeIn>
+        <FadeIn immediate>
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Data Security</h2>
             <p className="text-lg text-gray-700 leading-relaxed mb-4">
@@ -181,7 +181,7 @@ export default function PrivacyPolicyPage() {
         </FadeIn>
 
         {/* Your Rights */}
-        <FadeIn>
+        <FadeIn immediate>
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Your Rights</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
@@ -205,7 +205,7 @@ export default function PrivacyPolicyPage() {
         </FadeIn>
 
         {/* Changes */}
-        <FadeIn>
+        <FadeIn immediate>
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Changes to This Policy</h2>
             <p className="text-gray-700 leading-relaxed">
@@ -217,7 +217,7 @@ export default function PrivacyPolicyPage() {
         </FadeIn>
 
         {/* Contact */}
-        <FadeIn>
+        <FadeIn immediate>
           <section className="rounded-lg p-8 bg-warm">
             <h2 className="text-2xl font-bold mb-4 text-gray-900 tracking-tight">Contact Us</h2>
             <p className="text-gray-700 leading-relaxed mb-4">

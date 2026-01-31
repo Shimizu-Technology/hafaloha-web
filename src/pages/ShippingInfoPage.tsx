@@ -32,7 +32,7 @@ export default function ShippingInfoPage() {
       {/* Main Content */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
         {/* Processing Times */}
-        <FadeIn>
+        <FadeIn immediate>
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-6 text-gray-900 tracking-tight">Processing Times</h2>
             <div className="rounded-lg p-8 bg-warm">
@@ -49,11 +49,11 @@ export default function ShippingInfoPage() {
 
         {/* Shipping Options */}
         <div className="mb-16">
-          <FadeIn>
+          <FadeIn immediate>
             <h2 className="text-3xl font-bold mb-8 text-gray-900 tracking-tight">Shipping Options</h2>
           </FadeIn>
 
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <StaggerContainer immediate className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Domestic */}
             <StaggerItem>
               <div className="rounded-lg p-8 bg-warm h-full">
@@ -131,7 +131,7 @@ export default function ShippingInfoPage() {
         </div>
 
         {/* Tracking */}
-        <FadeIn>
+        <FadeIn immediate>
           <div className="mb-16">
             <h2 className="text-3xl font-bold mb-6 text-gray-900 tracking-tight">Tracking Your Order</h2>
             <div className="prose prose-lg max-w-none">
@@ -159,7 +159,7 @@ export default function ShippingInfoPage() {
         </FadeIn>
 
         {/* Important Notes */}
-        <FadeIn>
+        <FadeIn immediate>
           <div className="rounded-lg p-8 bg-warm mb-16">
             <h2 className="text-2xl font-semibold mb-4 text-gray-900 tracking-tight">Important Notes</h2>
             <ul className="space-y-3">
@@ -184,7 +184,7 @@ export default function ShippingInfoPage() {
         </FadeIn>
 
         {/* CTA */}
-        <FadeIn>
+        <FadeIn immediate>
           <div className="text-center py-8">
             <h2 className="text-2xl font-semibold mb-4 text-gray-900 tracking-tight">Have Questions?</h2>
             <p className="mb-6 max-w-xl mx-auto text-gray-600">
