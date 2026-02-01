@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FeaturedProducts from '../components/FeaturedProducts';
 import { homepageApi, type HomepageSection } from '../services/api';
+import { SlideUp, FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 
 // Default fallback content
 const defaultHero = {
@@ -81,31 +82,37 @@ export default function HomePage() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center w-full">
           <div className="bg-white/95 backdrop-blur-md rounded-2xl p-8 sm:p-12 lg:p-16 inline-block max-w-3xl shadow-xl">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-900 leading-tight">
-              {heroContent.title || defaultHero.title}
-            </h1>
+            <SlideUp delay={0.1}>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-900 leading-tight">
+                {heroContent.title || defaultHero.title}
+              </h1>
+            </SlideUp>
             {heroContent.subtitle && (
-              <p className="text-base sm:text-lg mb-8 text-gray-600 max-w-xl mx-auto leading-relaxed">
-                {heroContent.subtitle}
-              </p>
+              <SlideUp delay={0.3}>
+                <p className="text-base sm:text-lg mb-8 text-gray-600 max-w-xl mx-auto leading-relaxed">
+                  {heroContent.subtitle}
+                </p>
+              </SlideUp>
             )}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to={heroContent.button_link || "/products"}
-                className="btn-primary text-lg px-10 py-4 inline-flex items-center justify-center gap-2"
-              >
-                {heroContent.button_text || "Shop Now"}
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-              <Link
-                to="/collections"
-                className="btn-secondary text-lg px-8 py-4 inline-flex items-center justify-center"
-              >
-                Browse Collections
-              </Link>
-            </div>
+            <SlideUp delay={0.5}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  to={heroContent.button_link || "/products"}
+                  className="btn-primary text-lg px-10 py-4 inline-flex items-center justify-center gap-2"
+                >
+                  {heroContent.button_text || "Shop Now"}
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+                <Link
+                  to="/collections"
+                  className="btn-secondary text-lg px-8 py-4 inline-flex items-center justify-center"
+                >
+                  Browse Collections
+                </Link>
+              </div>
+            </SlideUp>
           </div>
         </div>
       </div>
@@ -124,27 +131,28 @@ export default function HomePage() {
                 Shop by Category
               </h2>
             </div>
-            <div className={`grid grid-cols-1 ${cardsContent.length >= 2 ? 'md:grid-cols-2' : ''} ${cardsContent.length >= 3 ? 'lg:grid-cols-3' : ''} gap-6 sm:gap-8`}>
+            <StaggerContainer className={`grid grid-cols-1 ${cardsContent.length >= 2 ? 'md:grid-cols-2' : ''} ${cardsContent.length >= 3 ? 'lg:grid-cols-3' : ''} gap-6 sm:gap-8`}>
               {cardsContent.map((card, index) => (
-                <Link 
-                  key={card.id || index}
-                  to={card.button_link || "/products"}
-                  className="group relative overflow-hidden rounded-lg"
-                >
-                  <div 
-                    className="aspect-4/3 bg-cover bg-center"
-                    style={{ 
-                      backgroundImage: `url('${card.image_url || "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800"}')` 
-                    }}
+                <StaggerItem key={card.id || index}>
+                  <Link 
+                    to={card.button_link || "/products"}
+                    className="group relative overflow-hidden rounded-lg block"
                   >
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-all duration-300"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white text-center drop-shadow-lg">{card.title}</h3>
+                    <div 
+                      className="aspect-4/3 bg-cover bg-center"
+                      style={{ 
+                        backgroundImage: `url('${card.image_url || "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800"}')` 
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-all duration-300"></div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-white text-center drop-shadow-lg">{card.title}</h3>
+                      </div>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </div>
       )}
@@ -152,39 +160,41 @@ export default function HomePage() {
       {/* Founder Teaser Section */}
       <div className="bg-white py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
-            {/* Image */}
-            <div>
-              <img 
-                src="/images/len_and_tara_hafaloha.webp" 
-                alt="Leonard and Tara Kaae - Hafaloha Founders"
-                className="w-full rounded-lg"
-              />
+          <FadeIn>
+            <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+              {/* Image */}
+              <div>
+                <img 
+                  src="/images/len_and_tara_hafaloha.webp" 
+                  alt="Leonard and Tara Kaae - Hafaloha Founders"
+                  className="w-full rounded-lg"
+                />
+              </div>
+              
+              {/* Content */}
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-gray-900">
+                  The Hafaloha Story
+                </h2>
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  Håfa Adai! We're Leonard and Tara Kaae, the founders of Hafaloha. What started as just 
+                  a few designs and a dream has grown into something we're incredibly proud of.
+                </p>
+                <p className="text-gray-600 mb-6 leading-relaxed italic border-l-2 border-gray-200 pl-4">
+                  "Hafaloha is more than just products or a brand—it's a lifestyle and a way of life."
+                </p>
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 text-gray-900 font-medium hover:text-hafalohaRed transition"
+                >
+                  Read Our Full Story
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </div>
             </div>
-            
-            {/* Content */}
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-gray-900">
-                The Hafaloha Story
-              </h2>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                Håfa Adai! We're Leonard and Tara Kaae, the founders of Hafaloha. What started as just 
-                a few designs and a dream has grown into something we're incredibly proud of.
-              </p>
-              <p className="text-gray-600 mb-6 leading-relaxed italic border-l-2 border-gray-200 pl-4">
-                "Hafaloha is more than just products or a brand—it's a lifestyle and a way of life."
-              </p>
-              <Link
-                to="/about"
-                className="inline-flex items-center gap-2 text-gray-900 font-medium hover:text-hafalohaRed transition"
-              >
-                Read Our Full Story
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-          </div>
+          </FadeIn>
         </div>
       </div>
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { productsApi, formatPrice } from '../services/api';
 import type { Product } from '../services/api';
 import ProductBadge from './ProductBadge';
+import { FadeIn, StaggerContainer, StaggerItem } from './animations';
 
 export default function FeaturedProducts() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -70,22 +71,24 @@ export default function FeaturedProducts() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-      <div className="text-center mb-10 sm:mb-14">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">
-          Featured Products
-        </h2>
-        <p className="text-base text-gray-500 max-w-2xl mx-auto">
-          Discover our hand-picked selection of premium island living apparel
-        </p>
-      </div>
+      <FadeIn>
+        <div className="text-center mb-10 sm:mb-14">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">
+            Featured Products
+          </h2>
+          <p className="text-base text-gray-500 max-w-2xl mx-auto">
+            Discover our hand-picked selection of premium island living apparel
+          </p>
+        </div>
+      </FadeIn>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-12">
+      <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-12">
         {products.map((product) => {
           const isOnSale = product.sale_price_cents && product.sale_price_cents < product.base_price_cents;
 
           return (
+            <StaggerItem key={product.id}>
             <Link
-              key={product.id}
               to={`/products/${product.slug}`}
               className="group flex flex-col"
             >
@@ -143,9 +146,10 @@ export default function FeaturedProducts() {
                 </div>
               </div>
             </Link>
+            </StaggerItem>
           );
         })}
-      </div>
+      </StaggerContainer>
 
       {/* View All Button */}
       <div className="text-center">
