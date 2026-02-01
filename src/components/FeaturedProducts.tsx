@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { productsApi, formatPrice } from '../services/api';
 import type { Product } from '../services/api';
@@ -64,12 +64,35 @@ export default function FeaturedProducts() {
   }
 
   if (error || products.length === 0) {
-    return null; // Don't show section if no products
+    // Show a fallback CTA instead of hiding the entire section
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+        <FadeIn immediate>
+          <div className="text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 tracking-tight">
+              Shop Our Collection
+            </h2>
+            <p className="text-base text-gray-500 max-w-2xl mx-auto mb-8">
+              Discover premium island living apparel celebrating Chamorro and Hawaiian heritage
+            </p>
+            <Link
+              to="/products"
+              className="group inline-flex items-center gap-2 text-base px-8 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition font-medium"
+            >
+              Browse All Products
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </FadeIn>
+      </div>
+    );
   }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
-      <FadeIn>
+      <FadeIn immediate>
         <div className="text-center mb-10 sm:mb-14">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 tracking-tight">
             Featured Products
@@ -83,6 +106,7 @@ export default function FeaturedProducts() {
       <StaggerContainer
         className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-12"
         staggerDelay={0.06}
+        immediate
       >
         {products.map((product) => {
           const isOnSale = product.sale_price_cents && product.sale_price_cents < product.base_price_cents;

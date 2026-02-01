@@ -20,7 +20,8 @@ export default function FadeIn({
   immediate = false
 }: FadeInProps) {
   const ref = useRef(null);
-  const inViewResult = useInView(ref, { once: true, margin: "-80px" });
+  // Use a generous margin so elements trigger well before they're fully in view
+  const inViewResult = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
   const isInView = immediate || inViewResult;
 
   const directions = {

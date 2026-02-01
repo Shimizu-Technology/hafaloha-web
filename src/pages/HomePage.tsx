@@ -70,123 +70,67 @@ export default function HomePage() {
     fetchSections();
   }, []);
 
-  // Use dynamic or fallback content
+  // Use dynamic or fallback content (use API text but always dark gradient layout)
   const heroContent = hero || defaultHero;
   const cardsContent = categoryCards.length > 0 ? categoryCards : defaultCategoryCards;
-  const hasHeroImage = !!heroContent.background_image_url;
 
   return (
     <div className="min-h-screen">
       {/* ============================================================ */}
-      {/* HERO SECTION — gradient orb background, optional white card  */}
+      {/* HERO SECTION — always dark gradient with brand-colored orbs  */}
       {/* ============================================================ */}
       <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-[70vh] flex items-center overflow-hidden">
-        {/* Gradient orbs */}
+        {/* Brand-colored gradient orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-red-500/20 rounded-full blur-3xl" />
           <div className="absolute top-1/3 -right-1/4 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl" />
           <div className="absolute -bottom-1/4 left-1/3 w-80 h-80 bg-red-400/10 rounded-full blur-3xl" />
         </div>
 
-        {/* Optional background image overlay (if API provides one) */}
-        {hasHeroImage && (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-30"
-            style={{ backgroundImage: `url('${heroContent.background_image_url}')` }}
-          />
-        )}
-
-        {/* Content */}
+        {/* Content — always direct text on dark gradient */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 w-full text-center">
-          {hasHeroImage ? (
-            /* With API image → white frosted card on top of image+gradient */
-            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-8 sm:p-12 lg:p-16 inline-block max-w-3xl shadow-xl">
-              <motion.h1
+          <div className="max-w-3xl mx-auto">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: heroEase }}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight"
+            >
+              {heroContent.title || defaultHero.title}
+            </motion.h1>
+            {(heroContent.subtitle || defaultHero.subtitle) && (
+              <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1, ease: heroEase }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-900 leading-tight tracking-tight"
+                transition={{ duration: 0.8, delay: 0.2, ease: heroEase }}
+                className="text-lg sm:text-xl mb-10 text-gray-300 max-w-xl mx-auto leading-relaxed"
               >
-                {heroContent.title || defaultHero.title}
-              </motion.h1>
-              {heroContent.subtitle && (
-                <motion.p
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: heroEase }}
-                  className="text-base sm:text-lg mb-8 text-gray-600 max-w-xl mx-auto leading-relaxed"
-                >
-                  {heroContent.subtitle}
-                </motion.p>
-              )}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: heroEase }}
-                className="flex flex-col sm:flex-row gap-4 justify-center"
+                {heroContent.subtitle || defaultHero.subtitle}
+              </motion.p>
+            )}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: heroEase }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              <Link
+                to={heroContent.button_link || "/products"}
+                className="group btn-primary text-lg px-10 py-4 inline-flex items-center justify-center gap-2"
               >
-                <Link
-                  to={heroContent.button_link || "/products"}
-                  className="group btn-primary text-lg px-10 py-4 inline-flex items-center justify-center gap-2"
-                >
-                  {heroContent.button_text || "Shop Now"}
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-                <Link
-                  to="/collections"
-                  className="btn-secondary text-lg px-8 py-4 inline-flex items-center justify-center"
-                >
-                  Browse Collections
-                </Link>
-              </motion.div>
-            </div>
-          ) : (
-            /* No API image → text directly on dark gradient bg */
-            <div className="max-w-3xl mx-auto">
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1, ease: heroEase }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight"
+                {heroContent.button_text || "Shop Now"}
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+              <Link
+                to="/collections"
+                className="border-2 border-white/30 text-white hover:bg-white/10 rounded-lg text-lg px-8 py-4 inline-flex items-center justify-center transition-colors"
               >
-                {heroContent.title || defaultHero.title}
-              </motion.h1>
-              {heroContent.subtitle && (
-                <motion.p
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: heroEase }}
-                  className="text-lg sm:text-xl mb-10 text-gray-300 max-w-xl mx-auto leading-relaxed"
-                >
-                  {heroContent.subtitle}
-                </motion.p>
-              )}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: heroEase }}
-                className="flex flex-col sm:flex-row gap-4 justify-center"
-              >
-                <Link
-                  to={heroContent.button_link || "/products"}
-                  className="group btn-primary text-lg px-10 py-4 inline-flex items-center justify-center gap-2"
-                >
-                  {heroContent.button_text || "Shop Now"}
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-                <Link
-                  to="/collections"
-                  className="border-2 border-white/30 text-white hover:bg-white/10 rounded-lg text-lg px-8 py-4 inline-flex items-center justify-center transition-colors"
-                >
-                  Browse Collections
-                </Link>
-              </motion.div>
-            </div>
-          )}
+                Browse Collections
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -202,7 +146,7 @@ export default function HomePage() {
       {/* ============================================================ */}
       <div className="border-y border-gray-100 py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <StaggerContainer immediate className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <StaggerItem>
               <div className="text-2xl mb-2">🌺</div>
               <h3 className="font-semibold text-gray-900 mb-1">Island Pride</h3>
@@ -230,10 +174,10 @@ export default function HomePage() {
       {/* ============================================================ */}
       {/* SHOP BY CATEGORY — bento grid                                */}
       {/* ============================================================ */}
-      {!loading && cardsContent.length > 0 && (
+      {cardsContent.length > 0 && (
         <div className="py-20 sm:py-24 bg-warm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FadeIn>
+            <FadeIn immediate>
               <div className="text-center mb-10 sm:mb-14">
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                   Shop by Category
@@ -243,13 +187,13 @@ export default function HomePage() {
 
             {/* Bento grid — layout adapts to number of cards */}
             {cardsContent.length === 1 && (
-              <FadeIn>
+              <FadeIn immediate>
                 <CategoryCard card={cardsContent[0]} className="aspect-[16/9] md:aspect-[21/9]" />
               </FadeIn>
             )}
 
             {cardsContent.length === 2 && (
-              <StaggerContainer className="grid grid-cols-1 md:grid-cols-12 gap-6">
+              <StaggerContainer immediate className="grid grid-cols-1 md:grid-cols-12 gap-6">
                 <StaggerItem className="md:col-span-7">
                   <CategoryCard card={cardsContent[0]} className="aspect-[4/3] md:aspect-auto md:h-full min-h-[280px]" />
                 </StaggerItem>
@@ -260,7 +204,7 @@ export default function HomePage() {
             )}
 
             {cardsContent.length >= 3 && (
-              <StaggerContainer className="grid grid-cols-1 md:grid-cols-12 gap-6">
+              <StaggerContainer immediate className="grid grid-cols-1 md:grid-cols-12 gap-6">
                 <StaggerItem className="md:col-span-7 md:row-span-2">
                   <CategoryCard card={cardsContent[0]} className="aspect-[4/3] md:aspect-auto md:h-full min-h-[280px]" />
                 </StaggerItem>
@@ -289,7 +233,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
             {/* Image — 7 columns */}
-            <FadeIn direction="left" className="md:col-span-7">
+            <FadeIn immediate direction="left" className="md:col-span-7">
               <div className="relative">
                 <img 
                   src="/images/len_and_tara_hafaloha.webp" 
@@ -303,7 +247,7 @@ export default function HomePage() {
             </FadeIn>
             
             {/* Text — 5 columns */}
-            <FadeIn direction="right" delay={0.1} className="md:col-span-5">
+            <FadeIn immediate direction="right" delay={0.1} className="md:col-span-5">
               <div>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 text-gray-900 tracking-tight">
                   The Hafaloha Story
@@ -312,7 +256,7 @@ export default function HomePage() {
                   Håfa Adai! We're Leonard and Tara Kaae, the founders of Hafaloha. What started as just 
                   a few designs and a dream has grown into something we're incredibly proud of.
                 </p>
-                <blockquote className="mb-8 pl-5 border-l-4 border-hafalohaRed/40">
+                <blockquote className="mb-8 pl-5 border-l-4" style={{ borderColor: 'rgba(179, 27, 27, 0.4)' }}>
                   <p className="text-lg sm:text-xl font-medium text-gray-800 italic leading-relaxed">
                     "Hafaloha is more than just products or a brand—it's a lifestyle and a way of life."
                   </p>
@@ -335,7 +279,7 @@ export default function HomePage() {
       {/* ============================================================ */}
       {/* NEWSLETTER / SOCIAL — gradient bg + social proof             */}
       {/* ============================================================ */}
-      <FadeIn>
+      <FadeIn immediate>
         <div className="relative py-20 sm:py-24 overflow-hidden">
           {/* Gradient background */}
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" />
