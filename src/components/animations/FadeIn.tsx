@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useInView } from 'framer-motion';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 interface FadeInProps {
   children: React.ReactNode;
@@ -20,9 +21,14 @@ export default function FadeIn({
   immediate = false
 }: FadeInProps) {
   const ref = useRef(null);
-  // Use a generous margin so elements trigger well before they're fully in view
-  const inViewResult = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
+  const inViewResult = useInView(ref, { once: true, margin: "-40px" });
   const isInView = immediate || inViewResult;
+  const prefersReduced = useReducedMotion();
+
+  // If user prefers reduced motion, render children directly
+  if (prefersReduced) {
+    return <div className={className}>{children}</div>;
+  }
 
   const directions = {
     up: { y: 30 },
