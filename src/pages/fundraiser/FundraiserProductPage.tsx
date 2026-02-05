@@ -97,6 +97,10 @@ function FundraiserProductPageContent() {
     toast.success('Added to cart!');
   };
 
+  // Reserved for potential future use (e.g., showing selected variant details)
+  const _selectedVariant = product?.variants.find((v) => v.id === selectedVariantId);
+  void _selectedVariant;
+
   // Build image array
   const images = product?.images?.length
     ? product.images.map((img) => img.url)
