@@ -379,8 +379,8 @@ export default function AdminAcaiPage() {
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Acai Cakes Management</h1>
 
       {/* Tabs */}
-      <div className="border-b border-gray-200 mb-6">
-        <nav className="flex gap-4 overflow-x-auto">
+      <div className="mb-6">
+        <nav className="flex flex-wrap gap-2">
           {[
             { id: 'settings', label: 'Settings' },
             { id: 'crust', label: 'Crust Options' },
@@ -391,10 +391,10 @@ export default function AdminAcaiPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as TabType)}
-              className={`py-3 px-4 border-b-2 font-medium transition whitespace-nowrap ${
+              className={`py-2 px-4 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'border-hafalohaRed text-hafalohaRed'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
+                  ? 'bg-hafalohaRed text-white shadow-sm'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
               {tab.label}
