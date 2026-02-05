@@ -40,6 +40,8 @@ interface ProductFormData {
   product_stock_quantity?: number;
   product_low_stock_threshold?: number;
   collection_ids: number[];
+  needs_attention?: boolean;
+  import_notes?: string;
 }
 
 export default function ProductFormPage() {
@@ -121,6 +123,8 @@ export default function ProductFormPage() {
         product_stock_quantity: product.product_stock_quantity,
         product_low_stock_threshold: product.product_low_stock_threshold || 5,
         collection_ids: product.collection_ids || [],
+        needs_attention: product.needs_attention || false,
+        import_notes: product.import_notes || '',
       });
       
       // Load images
@@ -380,6 +384,26 @@ export default function ProductFormPage() {
                   Unarchive Product
                 </>
               )}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Needs Attention Banner */}
+      {id && formData.needs_attention && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="font-medium text-amber-800">This product needs attention</p>
+            {formData.import_notes && (
+              <p className="text-sm text-amber-700 mt-1">{formData.import_notes}</p>
+            )}
+            <button
+              type="button"
+              onClick={() => setFormData(prev => ({ ...prev, needs_attention: false, import_notes: '' }))}
+              className="mt-2 text-sm font-medium text-amber-600 hover:text-amber-800 underline"
+            >
+              Mark as resolved
             </button>
           </div>
         </div>
