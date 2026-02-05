@@ -150,7 +150,8 @@ export default function ProductsTable({
                         <p className="font-medium text-gray-900">{product.name}</p>
                         {product.needs_attention && (
                           <span title={product.import_notes || 'Needs attention'} className="inline-flex items-center">
-                            <AlertTriangle className="w-4 h-4 text-amber-500" />
+                            <AlertTriangle className="w-4 h-4 text-amber-500" aria-hidden="true" />
+                            <span className="sr-only">{product.import_notes || 'Needs attention'}</span>
                           </span>
                         )}
                       </div>
@@ -191,7 +192,10 @@ export default function ProductsTable({
                 <div className="flex items-center gap-1.5">
                   <p className="font-semibold text-gray-900">{product.name}</p>
                   {product.needs_attention && (
-                    <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                    <span title={product.import_notes || 'Needs attention'} className="inline-flex items-center">
+                      <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0" aria-hidden="true" />
+                      <span className="sr-only">{product.import_notes || 'Needs attention'}</span>
+                    </span>
                   )}
                 </div>
                 <p className="text-sm text-gray-600">{formatCurrency(product.base_price_cents)}</p>

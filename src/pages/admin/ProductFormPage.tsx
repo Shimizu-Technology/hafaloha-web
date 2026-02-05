@@ -224,7 +224,9 @@ export default function ProductFormPage() {
           inventory_level: updatedProduct.inventory_level || 'none',
           product_stock_quantity: updatedProduct.product_stock_quantity,
           product_low_stock_threshold: updatedProduct.product_low_stock_threshold || 5,
-          collection_ids: updatedProduct.collection_ids || [], // Added this line!
+          collection_ids: updatedProduct.collection_ids || [],
+          needs_attention: updatedProduct.needs_attention || false,
+          import_notes: updatedProduct.import_notes || '',
         });
         
         toast.success('Product updated successfully!', {
