@@ -26,6 +26,7 @@ import AdminFundraiserFormPage from './pages/admin/AdminFundraiserFormPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import OrderHistoryPage from './pages/OrderHistoryPage';
+import AccountPage from './pages/AccountPage';
 import AcaiCakesPage from './pages/AcaiCakesPage';
 import FundraiserPage from './pages/FundraiserPage';
 import FundraisersListPage from './pages/FundraisersListPage';
@@ -53,6 +54,16 @@ function CustomUserButton({ isAdmin }: { isAdmin: boolean }) {
   return (
     <UserButton afterSignOutUrl="/">
       <UserButton.MenuItems>
+        {/* My Account - available to all signed-in users */}
+        <UserButton.Action
+          label="My Account"
+          labelIcon={
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+            </svg>
+          }
+          onClick={() => navigate('/account')}
+        />
         {/* My Orders - available to all signed-in users */}
         <UserButton.Action
           label="My Orders"
@@ -389,7 +400,13 @@ function AppContent() {
                   </SignedOut>
                   <SignedIn>
                     <div className="flex items-center justify-between py-2">
-                      <span className="text-warm-700 font-medium">My Account</span>
+                      <Link
+                        to="/account"
+                        className="text-warm-700 hover:text-hafalohaRed font-medium transition"
+                        onClick={handleNavClick}
+                      >
+                        My Account
+                      </Link>
                       <CustomUserButton isAdmin={isAdmin} />
                     </div>
                   </SignedIn>
@@ -413,6 +430,7 @@ function AppContent() {
           <Route path="/fundraisers" element={<FundraisersListPage />} />
           <Route path="/fundraisers/:slug" element={<FundraiserPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/account" element={<AccountPage />} />
           <Route path="/orders" element={<OrderHistoryPage />} />
           <Route path="/orders/:id" element={<OrderConfirmationPage />} />
           <Route path="/contact" element={<ContactPage />} />
