@@ -31,6 +31,12 @@ import AcaiCakesPage from './pages/AcaiCakesPage';
 import FundraiserPage from './pages/FundraiserPage';
 import FundraisersListPage from './pages/FundraisersListPage';
 import NotFoundPage from './pages/NotFoundPage';
+// Fundraiser Public Storefront Pages
+import FundraiserPublicPage from './pages/fundraiser/FundraiserPage';
+import FundraiserProductPage from './pages/fundraiser/FundraiserProductPage';
+import FundraiserCartPage from './pages/fundraiser/FundraiserCartPage';
+import FundraiserCheckoutPage from './pages/fundraiser/FundraiserCheckoutPage';
+import FundraiserOrderConfirmationPage from './pages/fundraiser/FundraiserOrderConfirmationPage';
 import ContactPage from './pages/ContactPage';
 import ShippingInfoPage from './pages/ShippingInfoPage';
 import ReturnsPage from './pages/ReturnsPage';
@@ -429,6 +435,14 @@ function AppContent() {
           <Route path="/acai-cakes" element={<AcaiCakesPage />} />
           <Route path="/fundraisers" element={<FundraisersListPage />} />
           <Route path="/fundraisers/:slug" element={<FundraiserPage />} />
+          
+          {/* Fundraiser Public Storefront Routes */}
+          <Route path="/f/:slug" element={<FundraiserPublicPage />} />
+          <Route path="/f/:slug/products/:productSlug" element={<FundraiserProductPage />} />
+          <Route path="/f/:slug/cart" element={<FundraiserCartPage />} />
+          <Route path="/f/:slug/checkout" element={<FundraiserCheckoutPage />} />
+          <Route path="/f/:slug/order/:orderId" element={<FundraiserOrderConfirmationPage />} />
+          
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/orders" element={<OrderHistoryPage />} />
