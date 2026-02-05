@@ -497,12 +497,12 @@ function AppContent() {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/products?category=mens" className="text-warm-500 hover:text-warm-900 transition text-sm">
+                    <Link to="/products?collection=mens" className="text-warm-500 hover:text-warm-900 transition text-sm">
                       Mens
                     </Link>
                   </li>
                   <li>
-                    <Link to="/products?category=womens" className="text-warm-500 hover:text-warm-900 transition text-sm">
+                    <Link to="/products?collection=womens" className="text-warm-500 hover:text-warm-900 transition text-sm">
                       Womens
                     </Link>
                   </li>
