@@ -738,35 +738,36 @@ export default function ProductFormPage() {
             <p className="text-gray-500 italic">No collections available. Create collections first.</p>
           ) : (
             <div>
+              {/* Scrollable container wrapper - separate from grid to ensure scroll works */}
               <div 
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 border border-gray-300 rounded-lg p-4 bg-gray-50"
-                style={{ 
-                  maxHeight: '240px',  // Show ~6 rows (60 collections = 20 rows, so plenty to scroll)
-                  overflowY: 'scroll',
-                  WebkitOverflowScrolling: 'touch' 
-                }}
+                className="max-h-60 overflow-y-auto overflow-x-hidden border border-gray-300 rounded-lg bg-gray-50 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
               >
-                {allCollections.map((collection) => (
-                  <div key={collection.id} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`collection_${collection.id}`}
-                      checked={(formData.collection_ids || []).includes(collection.id)}
-                      onChange={() => handleCollectionToggle(collection.id)}
-                      className="w-4 h-4 text-hafalohaRed border-gray-300 rounded focus:ring-hafalohaRed"
-                    />
-                    <label htmlFor={`collection_${collection.id}`} className="ml-2 text-sm text-gray-700 cursor-pointer select-none">
-                      {collection.name}
-                      {collection.product_count !== undefined && (
-                        <span className="text-xs text-gray-500 ml-1">({collection.product_count})</span>
-                      )}
-                    </label>
-                  </div>
-                ))}
+                {/* Grid inside scrollable container */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
+                  {allCollections.map((collection) => (
+                    <div key={collection.id} className="flex items-center min-w-0">
+                      <input
+                        type="checkbox"
+                        id={`collection_${collection.id}`}
+                        checked={(formData.collection_ids || []).includes(collection.id)}
+                        onChange={() => handleCollectionToggle(collection.id)}
+                        className="w-4 h-4 text-hafalohaRed border-gray-300 rounded focus:ring-hafalohaRed shrink-0"
+                      />
+                      <label htmlFor={`collection_${collection.id}`} className="ml-2 text-sm text-gray-700 cursor-pointer select-none truncate">
+                        {collection.name}
+                        {collection.product_count !== undefined && (
+                          <span className="text-xs text-gray-500 ml-1">({collection.product_count})</span>
+                        )}
+                      </label>
+                    </div>
+                  ))}
+                </div>
               </div>
-              {allCollections.length > 18 && (
+              {allCollections.length > 12 && (
                 <p className="text-xs text-gray-500 mt-2 italic flex items-center gap-1">
-                  <span>↕️</span>
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                  </svg>
                   <span>Scroll to see more collections</span>
                 </p>
               )}

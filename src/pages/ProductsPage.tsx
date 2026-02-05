@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import type { Product } from '../services/api';
 import { productsApi, collectionsApi } from '../services/api';
@@ -20,12 +20,26 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [meta, setMeta] = useState({ page: 1, per_page: 12, total: 0 });
+  
+  // Local search input state to prevent focus loss during URL updates
+  const [searchInput, setSearchInput] = useState('');
+  const searchDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const page = parseInt(searchParams.get('page') || '1');
   const search = searchParams.get('search') || '';
   const collection = searchParams.get('collection') || '';
   const productType = searchParams.get('type') || '';
   const sort = searchParams.get('sort') || '';
+  
+  // Sync local search input with URL params on mount/URL change (but not during typing)
+  // We intentionally omit searchInput from deps - we only want to sync when URL changes
+  useEffect(() => {
+    if (searchInput !== search && !searchDebounceRef.current) {
+      setSearchInput(search);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
 
   useEffect(() => {
     fetchCollections();
@@ -68,14 +82,40 @@ export default function ProductsPage() {
     }
   };
 
-  const handleSearch = (value: string) => {
+  // Debounced search handler - updates URL after user stops typing
+  const updateSearchParams = useCallback((value: string) => {
     const params: Record<string, string> = {};
     if (value) params.search = value;
     if (collection) params.collection = collection;
     if (productType) params.type = productType;
     if (sort) params.sort = sort;
     setSearchParams(params);
+  }, [collection, productType, sort, setSearchParams]);
+
+  const handleSearch = (value: string) => {
+    // Update local state immediately (keeps input responsive)
+    setSearchInput(value);
+    
+    // Clear any existing debounce timer
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
+    
+    // Debounce URL update to prevent focus loss from rapid re-renders
+    searchDebounceRef.current = setTimeout(() => {
+      updateSearchParams(value);
+      searchDebounceRef.current = null;
+    }, 300);
   };
+  
+  // Cleanup debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (searchDebounceRef.current) {
+        clearTimeout(searchDebounceRef.current);
+      }
+    };
+  }, []);
 
   const handleFilterChange = (filterType: 'collection' | 'type' | 'sort', value: string) => {
     const params: Record<string, string> = {};
@@ -97,6 +137,14 @@ export default function ProductsPage() {
   };
 
   const clearFilters = () => {
+    // Clear debounce timer if active
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+      searchDebounceRef.current = null;
+    }
+    // Clear local search input state
+    setSearchInput('');
+    // Clear URL params
     setSearchParams({});
   };
 
@@ -188,9 +236,10 @@ export default function ProductsPage() {
           <div className="mb-4">
             <div className="relative max-w-2xl mx-auto">
               <input
+                ref={searchInputRef}
                 type="text"
                 placeholder="Search products..."
-                value={search}
+                value={searchInput}
                 onChange={(e) => handleSearch(e.target.value)}
                 className="w-full px-4 py-3 pl-11 text-sm sm:text-base bg-warm-50 border border-warm-200 rounded-full focus:ring-2 focus:ring-hafalohaRed focus:border-transparent focus:bg-white transition"
               />
@@ -376,7 +425,11 @@ export default function ProductsPage() {
           </div>
         ) : (
           <>
-            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 mb-12" staggerDelay={0.05}>
+            <StaggerContainer 
+              key={`products-page-${page}-${search}-${collection}-${productType}-${sort}`}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 mb-12" 
+              staggerDelay={0.05}
+            >
               {products.map((product) => (
                 <StaggerItem key={product.id}>
                   <ProductCard product={product} />
