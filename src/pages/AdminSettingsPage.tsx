@@ -40,6 +40,7 @@ interface SiteSettings {
     zip: string;
     country: string;
     phone: string;
+    email?: string;
   };
 }
 
